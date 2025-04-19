@@ -1,13 +1,11 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+    let {value} = $props();
+</script>
   
-    let file = null;
-  
-    function handleChange(event) {
-      file = event.target.files[0];
-      dispatch('change', file);
-    }
-  </script>
-  
-  <input type="file" on:change={handleChange} />
+<input
+        onchange={
+            (event: InputEvent)=>
+            value = `data:text/plain;base64,${btoa(encodeURIComponent(event.target.value))}`
+        }
+        type="file"
+/>

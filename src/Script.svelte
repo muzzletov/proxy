@@ -1,9 +1,12 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
-    let value = '';
+    let {value = $bindable() } = $props();
+</script>
 
-    $: dispatch('change', `data:text/plain;base64,${btoa(unescape(encodeURIComponent(value)))}`);
-  </script>
-  
-  <textarea bind:value rows="10" placeholder="Script"></textarea>
+<textarea
+        oninput={
+            (event: InputEvent)=>
+            value = `data:text/plain;base64,${btoa(encodeURIComponent(event.target.value))}`
+        }
+        placeholder="Script"
+        rows="10"
+></textarea>
